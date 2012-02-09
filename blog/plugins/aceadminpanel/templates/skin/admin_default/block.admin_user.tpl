@@ -80,7 +80,7 @@
 
                         <div class="nickname">{$oUserProfile->getLogin()}</div>
                     {if $oUserProfile->getProfileName() or 1==1}
-                        <div class="realname">zzz{$oUserProfile->getProfileName()|escape:'html'}</div>
+                        <div class="realname">{$oUserProfile->getProfileName()|escape:'html'}</div>
                     {/if}
                     </div>
 
