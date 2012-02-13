@@ -191,6 +191,7 @@ $config['module']['talk']['request']    = 60;
 $config['module']['talk']['period']     = 20000;
 $config['module']['talk']['max_errors'] = 4;
 $config['module']['talk']['encrypt']    = 'livestreet'; // Ключ XXTEA шифрования идентификаторов в ссылках
+$config['module']['talk']['max_users']	= 15; // Максимальное число адресатов в одном личном сообщении
 // Модуль Lang
 $config['module']['lang']['delete_undefined'] = true;   // Если установлена true, то модуль будет автоматически удалять из языковых конструкций переменные вида %%var%%, по которым не была произведена замена
 // Модуль Notify
@@ -216,7 +217,7 @@ $config['module']['image']['default']['round_corner_radius']  = '18';
 $config['module']['image']['default']['round_corner_rate']    = '40';
 $config['module']['image']['default']['path']['watermarks']   = '___path.root.server___/engine/lib/external/LiveImage/watermarks/';
 $config['module']['image']['default']['path']['fonts']        = '___path.root.server___/engine/lib/external/LiveImage/fonts/';
-$config['module']['image']['default']['jpg_quality']          = 100;  // Число от 0 до 100
+$config['module']['image']['default']['jpg_quality']          = 95;  // Число от 0 до 100
 
 $config['module']['image']['foto']['watermark_use']  = false;
 $config['module']['image']['foto']['round_corner']   = false;
@@ -231,6 +232,10 @@ $config['module']['userfeed']['count_default'] = 10; // Число топико�
 
 $config['module']['stream']['count_default'] = 20; // Число топиков в ленте по умолчанию
 $config['module']['stream']['disable_vote_events'] = false; 
+
+$config['module']['ls']['send_general'] = true;	// Отправка на сервер LS общей информации о сайте (домен, версия LS и плагинов)
+$config['module']['ls']['use_counter'] = true;	// Использование счетчика GA
+
 
 /**
  * Настройка топика-фотосета
@@ -478,19 +483,20 @@ $config['head']['default']['js']  = array(
 	"___path.root.engine_lib___/external/jquery/jquery.cookie.js",
 	"___path.root.engine_lib___/external/jquery/jquery.serializejson.js",
 	"___path.root.engine_lib___/external/prettify/prettify.js",
-	"___path.static.skin___/js/main.js",
-	"___path.static.skin___/js/favourite.js",
-	"___path.static.skin___/js/blocks.js",
-	"___path.static.skin___/js/talk.js",
-	"___path.static.skin___/js/vote.js",
-	"___path.static.skin___/js/poll.js",
-	"___path.static.skin___/js/comments.js",
-	"___path.static.skin___/js/blog.js",
-	"___path.static.skin___/js/friend.js",
-	"___path.static.skin___/js/userfeed.js",
-	"___path.static.skin___/js/stream.js",
-	"___path.static.skin___/js/photoset.js",
-	"___path.static.skin___/js/markup_settings.js",
+	"___path.root.engine_lib___/internal/template/js/main.js",
+	"___path.root.engine_lib___/internal/template/js/favourite.js",
+	"___path.root.engine_lib___/internal/template/js/blocks.js",
+	"___path.root.engine_lib___/internal/template/js/talk.js",
+	"___path.root.engine_lib___/internal/template/js/vote.js",
+	"___path.root.engine_lib___/internal/template/js/poll.js",
+	"___path.root.engine_lib___/internal/template/js/comments.js",
+	"___path.root.engine_lib___/internal/template/js/blog.js",
+	"___path.root.engine_lib___/internal/template/js/friend.js",
+	"___path.root.engine_lib___/internal/template/js/userfeed.js",
+	"___path.root.engine_lib___/internal/template/js/stream.js",
+	"___path.root.engine_lib___/internal/template/js/photoset.js",
+	"___path.root.engine_lib___/internal/template/js/markup_settings.js",
+	"___path.root.engine_lib___/internal/template/js/hook.js",
 );
 $config['head']['default']['css'] = array(
 	"___path.static.skin___/css/reset.css",

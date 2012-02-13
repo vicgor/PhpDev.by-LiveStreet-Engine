@@ -42,17 +42,24 @@ class MapperORM extends Mapper {
 	 */
 	public function UpdateEntity($oEntity) {
 		$sTableName = self::GetTableName($oEntity);
-		$iPrimaryKeyValue=$oEntity->_getDataOne($oEntity->_getPrimaryKey());
-				
-		if(!empty($iPrimaryKeyValue)) {
-			$sql = "UPDATE ".$sTableName." SET ?a WHERE ".$oEntity->_getPrimaryKey()." = ? "; 
-			return $this->oDb->query($sql,$oEntity->_getData(),$iPrimaryKeyValue);
+
+		if($aPrimaryKey=$oEntity->_getPrimaryKey()) {
+			// Возможен составной ключ
+			if (!is_array($aPrimaryKey)) {
+				$aPrimaryKey=array($aPrimaryKey);
+			}
+			$sWhere=' 1 = 1 ';
+			foreach ($aPrimaryKey as $sField) {
+				$sWhere.=' and '.$this->oDb->escape($sField,true)." = ".$this->oDb->escape($oEntity->_getDataOne($sField));
+			}
+			$sql = "UPDATE ".$sTableName." SET ?a WHERE {$sWhere}";
+			return $this->oDb->query($sql,$oEntity->_getData());
 		} else {
 			$aOriginalData = $oEntity->_getOriginalData();
 			$sWhere = implode(' AND ',array_map(create_function(
-				'$k,$v',
-				'return "{$k} = \"{$v}\"";'
-			),array_keys($aOriginalData),array_values($aOriginalData)));
+				'$k,$v,$oDb',
+				'return "{$oDb->escape($k,true)} = {$oDb->escape($v)}";'
+			),array_keys($aOriginalData),array_values($aOriginalData),array_fill(0,count($aOriginalData),$this->oDb)));
 			$sql = "UPDATE ".$sTableName." SET ?a WHERE 1=1 AND ". $sWhere; 
 			return $this->oDb->query($sql,$oEntity->_getData());
 		}
@@ -66,17 +73,24 @@ class MapperORM extends Mapper {
 	 */
 	public function DeleteEntity($oEntity) {		
 		$sTableName = self::GetTableName($oEntity);
-		$iPrimaryKeyValue=$oEntity->_getDataOne($oEntity->_getPrimaryKey());
 		
-		if(!empty($iPrimaryKeyValue)) {
-			$sql = "DELETE FROM ".$sTableName." WHERE ".$oEntity->_getPrimaryKey()." = ? "; 
-			return $this->oDb->query($sql,$iPrimaryKeyValue);
+		if($aPrimaryKey=$oEntity->_getPrimaryKey()) {
+			// Возможен составной ключ
+			if (!is_array($aPrimaryKey)) {
+				$aPrimaryKey=array($aPrimaryKey);
+			}
+			$sWhere=' 1 = 1 ';
+			foreach ($aPrimaryKey as $sField) {
+				$sWhere.=' and '.$this->oDb->escape($sField,true)." = ".$this->oDb->escape($oEntity->_getDataOne($sField));
+			}
+			$sql = "DELETE FROM ".$sTableName." WHERE {$sWhere}";
+			return $this->oDb->query($sql);
 		} else {
 			$aOriginalData = $oEntity->_getOriginalData();
 			$sWhere = implode(' AND ',array_map(create_function(
-				'$k,$v',
-				'return "{$k} = \"{$v}\"";'
-			),array_keys($aOriginalData),array_values($aOriginalData)));
+				'$k,$v,$oDb',
+				'return "{$oDb->escape($k,true)} = {$oDb->escape($v)}";'
+			),array_keys($aOriginalData),array_values($aOriginalData),array_fill(0,count($aOriginalData),$this->oDb)));
 			$sql = "DELETE FROM ".$sTableName." WHERE 1=1 AND ". $sWhere; 
 			return $this->oDb->query($sql);
 		}
@@ -342,6 +356,39 @@ class MapperORM extends Mapper {
 	}
 
 	/**
+	 * Primary индекс сущности
+	 *
+	 * @param unknown_type $oEntity
+	 * @return unknown
+	 */
+	public function ShowPrimaryIndexFrom($oEntity) {
+		$sTableName = self::GetTableName($oEntity);
+		return $this->ShowPrimaryIndexFromTable($sTableName);
+	}
+
+	/**
+	 * Primary индекс таблицы
+	 *
+	 * @param unknown_type $sTableName
+	 * @return unknown
+	 */
+	public function ShowPrimaryIndexFromTable($sTableName) {
+		if (false === ($aItems = Engine::getInstance()->Cache_GetLife("index_table_{$sTableName}"))) {
+			$sql = "SHOW INDEX FROM ".$sTableName;
+			$aItems = array();
+			if($aRows=$this->oDb->select($sql)) {
+				foreach($aRows as $aRow) {
+					if ($aRow['Key_name']=='PRIMARY') {
+						$aItems[$aRow['Seq_in_index']]=$aRow['Column_name'];
+					}
+				}
+			}
+			Engine::getInstance()->Cache_SetLife($aItems, "index_table_{$sTableName}");
+		}
+		return $aItems;
+	}
+
+	/**
 	 * Возвращает имя таблицы для сущности
 	 *
 	 * @param unknown_type $oEntity
@@ -353,8 +400,9 @@ class MapperORM extends Mapper {
 		 * 	prefix_user -> если модуль совпадает с сущностью
 		 * 	prefix_user_invite -> если модуль не сопадает с сущностью
 		 */
-		$sModuleName = func_underscore(Engine::GetModuleName($oEntity));
-		$sEntityName = func_underscore(Engine::GetEntityName($oEntity));
+		$sClass = Engine::getInstance()->Plugin_GetDelegater('entity', is_object($oEntity)?get_class($oEntity):$oEntity);
+		$sModuleName = func_underscore(Engine::GetModuleName($sClass));
+		$sEntityName = func_underscore(Engine::GetEntityName($sClass));
 		if (strpos($sEntityName,$sModuleName)===0) {
 			$sTable=func_underscore($sEntityName);
 		} else {

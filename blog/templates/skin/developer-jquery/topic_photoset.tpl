@@ -42,6 +42,7 @@ jQuery(window).load(function($) {
 
 	{assign var=iPhotosCount value=$oTopic->getPhotosetCount()}
 	<div class="content">
+		{hook run='topic_content_begin' topic=$oTopic bTopicList=$bTopicList}
 		{if $bTopicList}
 			{$oTopic->getTextShort()}
 			{if $oTopic->getTextShort()!=$oTopic->getText()}
@@ -56,6 +57,7 @@ jQuery(window).load(function($) {
 		{else}
 			{$oTopic->getText()}
 		{/if}
+		{hook run='topic_content_end' topic=$oTopic bTopicList=$bTopicList}
 	</div> 
 
         <!-- Topic Photo Image List -->
@@ -112,7 +114,7 @@ jQuery(window).load(function($) {
                 </li>
                 <li class="username"><a href="{$oUser->getUserWebPath()}">{$oUser->getLogin()}</a></li>
                 <li class="date">{date_format date=$oTopic->getDateAdd()}</li>
-                <li><a href="#" onclick="return ls.favourite.toggle({$oTopic->getId()},this,'topic');" class="favourite {if $oUserCurrent && $oTopic->getIsFavourite()}active{/if}"></a></li>
+                <li><a href="#" onclick="return ls.favourite.toggle({$oTopic->getId()},this,'topic');" class="favourite {if $oUserCurrent && $oTopic->getIsFavourite()}active{/if}"></a><span class="favourite-count" id="fav_count_topic_{$oTopic->getId()}">{if $oTopic->getCountFavourite()>0}{$oTopic->getCountFavourite()}{else}&nbsp;{/if}</span></li>
                 {if $bTopicList}
                         <li class="comments-link">
                                 {if $oTopic->getCountComment()>0}
