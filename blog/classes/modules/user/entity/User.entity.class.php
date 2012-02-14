@@ -16,25 +16,25 @@
 */
 
 class ModuleUser_EntityUser extends Entity {
-	
+
 	public function getId() {
         return $this->_aData['user_id'];
-    }        
+    }
     public function getLogin() {
         return $this->_aData['user_login'];
     }
     public function getPassword() {
         return $this->_aData['user_password'];
-    }    
+    }
     public function getMail() {
         return $this->_aData['user_mail'];
     }
-    public function getSkill() {         
+    public function getSkill() {
         return number_format(round($this->_aData['user_skill'],2), 2, '.', '');
     }
     public function getDateRegister() {
         return $this->_aData['user_date_register'];
-    }    
+    }
     public function getDateActivate() {
         return $this->_aData['user_date_activate'];
     }
@@ -43,8 +43,8 @@ class ModuleUser_EntityUser extends Entity {
     }
     public function getIpRegister() {
         return $this->_aData['user_ip_register'];
-    }       
-    public function getRating() {         
+    }
+    public function getRating() {
         return number_format(round($this->_aData['user_rating'],2), 2, '.', '');
     }
     public function getCountVote() {
@@ -55,7 +55,7 @@ class ModuleUser_EntityUser extends Entity {
     }
     public function getActivateKey() {
         return $this->_aData['user_activate_key'];
-    }   
+    }
     public function getProfileName() {
         return $this->_aData['user_profile_name'];
     }
@@ -102,7 +102,7 @@ class ModuleUser_EntityUser extends Entity {
     }
     public function getProfileFoto() {
         return $this->_aData['user_profile_foto'];
-    }    
+    }
     public function getSettingsNoticeNewTopic() {
         return $this->_aData['user_settings_notice_new_topic'];
     }
@@ -118,15 +118,15 @@ class ModuleUser_EntityUser extends Entity {
     public function getSettingsNoticeNewFriend() {
         return $this->_aData['user_settings_notice_new_friend'];
     }
-    
-    
-    
+
+
+
     public function getSession() {
         return $this->_aData['session'];
     }
     public function getProfileAvatarPath($iSize=100) {
-    	if ($sPath=$this->getProfileAvatar()) { 	
-        	return str_replace('_100x100',(($iSize==0)?"":"_{$iSize}x{$iSize}"),$sPath."?".date('His',strtotime($this->getProfileDate())));
+    	if ($sPath=$this->getProfileAvatar()) {
+        	return str_replace('_100x100',(($iSize==0)?"":"_{$iSize}x{$iSize}"),$sPath);
     	} else {
     		return Config::Get('path.static.skin').'/images/avatar_'.$iSize.'x'.$iSize.'.jpg';
     	}
@@ -140,7 +140,7 @@ class ModuleUser_EntityUser extends Entity {
     public function isAdministrator() {
         return $this->_aData['user_is_administrator'];
     }
-    public function getUserWebPath() {   
+    public function getUserWebPath() {
     	return Router::GetPath('profile').$this->getLogin().'/';
     }
     /**
@@ -151,7 +151,7 @@ class ModuleUser_EntityUser extends Entity {
     public function getUserFriend() {
     	return $this->_aData['user_friend'];
     }
-    
+
     public function setId($data) {
     	$this->_aData['user_id']=$data;
     }
@@ -160,16 +160,16 @@ class ModuleUser_EntityUser extends Entity {
     }
     public function setPassword($data) {
     	$this->_aData['user_password']=$data;
-    }    
+    }
     public function setMail($data) {
     	$this->_aData['user_mail']=$data;
     }
     public function setSkill($data) {
     	$this->_aData['user_skill']=$data;
-    }    
+    }
     public function setDateRegister($data) {
     	$this->_aData['user_date_register']=$data;
-    }    
+    }
     public function setDateActivate($data) {
     	$this->_aData['user_date_activate']=$data;
     }
@@ -178,7 +178,7 @@ class ModuleUser_EntityUser extends Entity {
     }
     public function setIpRegister($data) {
     	$this->_aData['user_ip_register']=$data;
-    }        
+    }
     public function setRating($data) {
     	$this->_aData['user_rating']=$data;
     }
@@ -190,7 +190,7 @@ class ModuleUser_EntityUser extends Entity {
     }
     public function setActivateKey($data) {
     	$this->_aData['user_activate_key']=$data;
-    }    
+    }
     public function setProfileName($data) {
     	$this->_aData['user_profile_name']=$data;
     }
@@ -229,7 +229,7 @@ class ModuleUser_EntityUser extends Entity {
     }
     public function setProfileFoto($data) {
     	$this->_aData['user_profile_foto']=$data;
-    }  
+    }
     public function setSettingsNoticeNewTopic($data) {
     	$this->_aData['user_settings_notice_new_topic']=$data;
     }
@@ -245,8 +245,8 @@ class ModuleUser_EntityUser extends Entity {
     public function setSettingsNoticeNewFriend($data) {
     	$this->_aData['user_settings_notice_new_friend']=$data;
     }
-    
-    
+
+
     public function setSession($data) {
     	$this->_aData['session']=$data;
     }
