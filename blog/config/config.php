@@ -91,6 +91,7 @@ $config['sys']['mail']['smtp']['host']     = 'localhost';            // Наст
 $config['sys']['mail']['smtp']['port']     = 25;                     // Настройки SMTP - порт
 $config['sys']['mail']['smtp']['user']     = '';                     // Настройки SMTP - пользователь
 $config['sys']['mail']['smtp']['password'] = '';                     // Настройки SMTP - пароль
+$config['sys']['mail']['smtp']['secure']   = '';                       // Настройки SMTP - secure protocol: tls, ssl
 $config['sys']['mail']['smtp']['auth']     = true;                   // Использовать авторизацию при отправке
 $config['sys']['mail']['include_comment']  = true;                   // Включает в уведомление о новых комментах текст коммента
 $config['sys']['mail']['include_talk']     = true;                   // Включает в уведомление о новых личных сообщениях текст сообщения
@@ -231,7 +232,7 @@ $config['module']['security']['hash']  = "livestreet_security_key"; // "прим
 $config['module']['userfeed']['count_default'] = 10; // Число топиков в ленте по умолчанию
 
 $config['module']['stream']['count_default'] = 20; // Число топиков в ленте по умолчанию
-$config['module']['stream']['disable_vote_events'] = false; 
+$config['module']['stream']['disable_vote_events'] = false;
 
 $config['module']['ls']['send_general'] = true;	// Отправка на сервер LS общей информации о сайте (домен, версия LS и плагинов)
 $config['module']['ls']['use_counter'] = true;	// Использование счетчика GA
@@ -501,7 +502,7 @@ $config['head']['default']['js']  = array(
 $config['head']['default']['css'] = array(
 	"___path.static.skin___/css/reset.css",
 	"___path.root.engine_lib___/external/jquery/markitup/skins/simple/style.css",
-	"___path.root.engine_lib___/external/jquery/markitup/sets/default/style.css",	
+	"___path.root.engine_lib___/external/jquery/markitup/sets/default/style.css",
 	"___path.root.engine_lib___/external/prettify/prettify.css",
 	"___path.static.skin___/css/main.css",
 	"___path.static.skin___/css/grid.css",

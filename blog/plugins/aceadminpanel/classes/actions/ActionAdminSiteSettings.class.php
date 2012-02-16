@@ -2,11 +2,11 @@
 /*---------------------------------------------------------------------------
  * @Plugin Name: aceAdminPanel
  * @Plugin Id: aceadminpanel
- * @Plugin URI: 
+ * @Plugin URI:
  * @Description: Advanced Administrator's Panel for LiveStreet/ACE
  * @Version: 1.5.271
  * @Author: Vadim Shemarov (aka aVadim)
- * @Author URI: 
+ * @Author URI:
  * @LiveStreet Version: 0.5
  * @File Name: ActionAdminSiteSettings.class.php
  * @License: GNU GPL v2, http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -215,6 +215,14 @@ class PluginAceadminpanel_AdminSiteSettings extends AceAdminPlugin
                         'config' => 'sys.mail.smtp.port',
                         'class' => 'w50 number',
                         'valtype' => 'number',
+                    ),
+                  //TODO
+                    'adm_set_sys_mail_smtp_secure' => array(
+                      'type' => 'select',
+                      'options' => array('', 'tls', 'ssl'),
+                      'config' => 'sys.mail.smtp.secure',
+                      'class' => 'w100p',
+                      'valtype' => 'string',
                     ),
                     'adm_set_sys_mail_smtp_user' => array(
                         'type' => 'input',

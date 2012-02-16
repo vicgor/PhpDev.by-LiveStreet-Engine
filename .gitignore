@@ -7,3 +7,4 @@ blog/uploads/images/
 blog/templates/compiled/
 blog/templates/cache/
 blog/plugins/plugins.dat
+.idea/
