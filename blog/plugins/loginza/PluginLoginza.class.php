@@ -18,7 +18,7 @@
 */
 
 if (!class_exists('Plugin')) {
-	die('Hacking attemp!');
+	die('Hacking attempt!');
 }
 /**
  * Plugin Loginza
@@ -37,12 +37,12 @@ class PluginLoginza extends Plugin {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Инициализация плагина
 	 */
 	public function Init() {
-		
+
 	}
 	/**
 	 * Проверяет наличие таблицы в БД

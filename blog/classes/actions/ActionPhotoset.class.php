@@ -62,7 +62,7 @@ class ActionPhotoset extends Action {
 		 * Загружаем в шаблон JS текстовки
 		 */
 		$this->Lang_AddLangJs(array(
-		'topic_photoset_photo_delete','topic_photoset_mark_as_preview','topic_photoset_photo_delete_confirm','topic_photoset_mark_as_preview',
+		'topic_photoset_photo_delete','topic_photoset_mark_as_preview','topic_photoset_photo_delete_confirm',
 		'topic_photoset_is_preview','topic_photoset_upload_choose'
 		));
 	}
@@ -739,7 +739,7 @@ class ActionPhotoset extends Action {
 		 * проверяем ввод тегов 
 		 */
 		$sTags=getRequest('topic_tags');
-		$aTags=explode(',',$sTags);
+		$aTags=explode(',',rtrim($sTags,"\r\n\t\0\x0B ."));
 		$aTagsNew=array();
 		foreach ($aTags as $sTag) {
 			$sTag=trim($sTag);

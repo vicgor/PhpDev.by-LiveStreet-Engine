@@ -2,11 +2,11 @@
 /*---------------------------------------------------------------------------
  * @Plugin Name: aceAdminPanel
  * @Plugin Id: aceadminpanel
- * @Plugin URI: 
+ * @Plugin URI:
  * @Description: Advanced Administrator's Panel for LiveStreet/ACE
  * @Version: 1.5.271
  * @Author: Vadim Shemarov (aka aVadim)
- * @Author URI: 
+ * @Author URI:
  * @LiveStreet Version: 0.5
  * @File Name: russian.site_settings.php
  * @License: GNU GPL v2, http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -64,6 +64,7 @@ return array(
     'adm_set_sys_mail_smtp_user'=>'Настройки SMTP - пользователь',
     'adm_set_sys_mail_smtp_password'=>'Настройки SMTP - пароль',
     'adm_set_sys_mail_smtp_auth'=>'Использовать авторизацию при отправке',
+    'adm_set_sys_mail_smtp_secure'=>'Использовать шифрование при отправке',
     'adm_set_sys_mail_include_comment'=>'Включает в уведомление о новых комментах текст коммента',
     'adm_set_sys_mail_include_talk'=>'Включает в уведомление о новых личных сообщениях текст сообщения',
 

@@ -2,7 +2,7 @@ CKEDITOR.plugins.add( 'tagcut',
 {
 	init: function( editor )
 	{
-	
+
 		editor.addCommand( 'insertCut',
 			{
 				exec : function( editor )

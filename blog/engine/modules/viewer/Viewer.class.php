@@ -177,8 +177,8 @@ class ModuleViewer extends Module {
 		 * Load template config
 		 */
 		if (!$bLocal) {
-			if(file_exists(Config::Get('path.smarty.template').'/settings/config/config.php')) {
-				Config::LoadFromFile(Config::Get('path.smarty.template').'/settings/config/config.php',false);
+			if(file_exists($sFile = Config::Get('path.smarty.template').'/settings/config/config.php')) {
+				Config::LoadFromFile($sFile,false);
 			}
 		}
 		/**
@@ -199,17 +199,15 @@ class ModuleViewer extends Module {
 		 */
 		$this->oSmarty = new lsSmarty();
 		$this->oSmarty->error_reporting=E_ALL^E_NOTICE; // подавляем NOTICE ошибки - в этом вся прелесть смарти )
-		$this->oSmarty->template_dir=(array)Config::Get('path.smarty.template');
-		$this->oSmarty->template_dir[]=Config::Get('path.root.server').'/plugins/';
+		$this->oSmarty->setTemplateDir(array_merge((array)Config::Get('path.smarty.template'),array(Config::Get('path.root.server').'/plugins/')));
 		/**
 		 * Для каждого скина устанавливаем свою директорию компиляции шаблонов
 		 */
 		$sCompilePath = Config::Get('path.smarty.compiled').'/'.Config::Get('view.skin');
 		if(!is_dir($sCompilePath)) @mkdir($sCompilePath);
-		$this->oSmarty->compile_dir=$sCompilePath;
-		
-		$this->oSmarty->cache_dir=Config::Get('path.smarty.cache');
-		$this->oSmarty->plugins_dir=array_merge(array(Config::Get('path.smarty.plug'),'plugins'),$this->oSmarty->plugins_dir);	
+		$this->oSmarty->setCompileDir($sCompilePath);
+		$this->oSmarty->setCacheDir(Config::Get('path.smarty.cache'));
+		$this->oSmarty->setPluginsDir(array_merge(array(Config::Get('path.smarty.plug'),'plugins'),$this->oSmarty->getPluginsDir()));
 		/**
 		 * Получаем настройки блоков из конфигов
 		 */
@@ -231,7 +229,9 @@ class ModuleViewer extends Module {
 	 * return ModuleViewer
 	 */
 	public function GetLocalViewer() {
-		$oViewerLocal=new ModuleViewer(Engine::getInstance());
+		$sClass = $this->Plugin_GetDelegate('module', __CLASS__);
+		
+		$oViewerLocal=new $sClass(Engine::getInstance());
 		$oViewerLocal->Init(true);
 		$oViewerLocal->VarAssign();
 		$oViewerLocal->Assign('aLang',$this->Lang_GetLangMsg());
