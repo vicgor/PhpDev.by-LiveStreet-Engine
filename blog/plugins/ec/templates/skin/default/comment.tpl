@@ -11,7 +11,7 @@
 	
 	<div id="comment_content_id_{$oComment->getId()}" class="content">
         <ul class="info">
-            <li class="avatar"><a href="{$oUser->getUserWebPath()}"><img src="{$oUser->getProfileAvatarPath(24)}" alt="avatar" style="width:24px;height:24px" /></a></li>
+            <li class="avatar"><a href="{$oUser->getUserWebPath()}"><img src="{$oUser->getProfileAvatarPath(24)}" alt="{$oUser->getLogin()}" style="width:24px;height:24px" /></a></li>
             <li class="username"><a href="{$oUser->getUserWebPath()}">{$oUser->getLogin()}</a></li>
             <li class="date">{date_format date=$oComment->getDate()}</li>
             {if $oUserCurrent and !$oComment->getDelete() and !$bAllowNewComment}
@@ -25,13 +25,13 @@
             {if $oUserCurrent and !$bNoCommentFavourites}
                 <li><a href="#" onclick="return ls.favourite.toggle({$oComment->getId()},this,'comment');" class="favourite {if $oComment->getIsFavourite()}active{/if}"></a></li>
             {/if}
-            {if !$oComment->getDelete() and $oUserCurrent and $oUserCurrent->isAdministrator()}
+            {if !$oComment->getDelete() and $oUserCurrent and (($aRole and $aRole.blog.topic.comment.delete) or $oUserCurrent->isAdministrator())}
                 <li><a href="#" class="delete" onclick="ls.comments.toggle(this,{$oComment->getId()}); return false;">{$aLang.comment_delete}</a></li>
             {/if}
-            {if $oComment->getDelete() and $oUserCurrent and $oUserCurrent->isAdministrator()}   										
+            {if $oComment->getDelete() and $oUserCurrent and (($aRole and $aRole.blog.topic.comment.delete) or $oUserCurrent->isAdministrator())}   										
                 <li><a href="#" class="repair" onclick="ls.comments.toggle(this,{$oComment->getId()}); return false;">{$aLang.comment_repair}</a></li>
             {/if}
-            {hook run='comment_action' comment=$oComment}
+            {hook run='comment_action' comment=$oComment user_current=$oUserCurrent}
         </ul>
 		{if $oComment->isBad()}
 			<div style="display: none;" id="comment_text_{$oComment->getId()}">
@@ -43,6 +43,12 @@
 		{/if}
 	</div>
 	
+	<div id="info_edit_{$oComment->getId()}" class="info_edit" {if !$oComment->getCommentEditUserId()} style="display: none;"{/if}>
+	    {if $oComment->getCommentEditUserId()}
+		{assign var="oUserEdit" value=$oComment->getEditUserLogin()}
+		{$aLang.ce_comment_info_edit_user|ls_lang:"login%%`$oUserEdit->getLogin()`":"date%%`$oComment->getCommentDateEdit()`"}
+	    {/if}
+	</div>
 	
 	{if $oComment->getTargetType()!='talk'}						
 		<div id="vote_area_comment_{$oComment->getId()}" class="voting {if $oComment->getRating()>0}positive{elseif $oComment->getRating()<0}negative{/if} {if !$oUserCurrent || $oComment->getUserId()==$oUserCurrent->getId() ||  strtotime($oComment->getDate())<$smarty.now-$oConfig->GetValue('acl.vote.comment.limit_time')}guest{/if}   {if $oVote} voted {if $oVote->getDirection()>0}plus{else}minus{/if}{/if}  ">
