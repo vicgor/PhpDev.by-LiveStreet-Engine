@@ -82,6 +82,8 @@
 		{/if}
 		{hook run='topic_show_info' topic=$oTopic}
 	</ul>
+    <div class="fb-like" data-href="{$oTopic->getUrl()}" data-send="false" data-width="450" data-show-faces="false" data-action="recommend" data-font="tahoma"></div>
+  
 	{if !$bTopicList}
 		{hook run='topic_show_end' topic=$oTopic}
 	{/if}

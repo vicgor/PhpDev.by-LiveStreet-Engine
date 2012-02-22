@@ -54,6 +54,7 @@
 
 
 <body onload="prettyPrint()">
+    {include file='facebook.tpl'}
 	{hook run='body_begin'}
 	{include file='header_top.tpl'}
 	{include file='nav.tpl'}
