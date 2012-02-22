@@ -1,6 +1,6 @@
 <ul class="list">
 	{foreach from=$oTopics item=oTopic name="cmt"}
-		{assign var="oUser" value=$oTopic->getUser()}							
+		{assign var="oUser" value=$oTopic->getUser()}
 		{assign var="oBlog" value=$oTopic->getBlog()}
 		
 		<li {if $smarty.foreach.cmt.iteration % 2 == 1}class="even"{/if}>
@@ -9,8 +9,8 @@
 			<a href="{$oTopic->getUrl()}" class="topic-title">{$oTopic->getTitle()|escape:'html'}</a>
 			<span>{$oTopic->getCountComment()}</span> &rarr;
 			<a href="{$oBlog->getUrlFull()}" class="blog-title">{$oBlog->getTitle()|escape:'html'}</a>
-		</li>						
-	{/foreach}				
+		</li>
+	{/foreach}
 </ul>
 
 

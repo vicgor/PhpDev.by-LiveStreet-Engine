@@ -19,22 +19,22 @@ class ModuleUser_EntityUser extends Entity {
 
 	public function getId() {
         return $this->_aData['user_id'];
-    }
+    }        
     public function getLogin() {
         return $this->_aData['user_login'];
     }
     public function getPassword() {
         return $this->_aData['user_password'];
-    }
+    }    
     public function getMail() {
         return $this->_aData['user_mail'];
     }
-    public function getSkill() {
+    public function getSkill() {         
         return number_format(round($this->_aData['user_skill'],2), 2, '.', '');
     }
     public function getDateRegister() {
         return $this->_aData['user_date_register'];
-    }
+    }    
     public function getDateActivate() {
         return $this->_aData['user_date_activate'];
     }
@@ -43,8 +43,8 @@ class ModuleUser_EntityUser extends Entity {
     }
     public function getIpRegister() {
         return $this->_aData['user_ip_register'];
-    }
-    public function getRating() {
+    }       
+    public function getRating() {         
         return number_format(round($this->_aData['user_rating'],2), 2, '.', '');
     }
     public function getCountVote() {
@@ -55,7 +55,7 @@ class ModuleUser_EntityUser extends Entity {
     }
     public function getActivateKey() {
         return $this->_aData['user_activate_key'];
-    }
+    }   
     public function getProfileName() {
         return $this->_aData['user_profile_name'];
     }
@@ -102,7 +102,7 @@ class ModuleUser_EntityUser extends Entity {
     }
     public function getProfileFoto() {
         return $this->_aData['user_profile_foto'];
-    }
+    }    
     public function getSettingsNoticeNewTopic() {
         return $this->_aData['user_settings_notice_new_topic'];
     }
@@ -125,7 +125,7 @@ class ModuleUser_EntityUser extends Entity {
         return $this->_aData['session'];
     }
     public function getProfileAvatarPath($iSize=100) {
-    	if ($sPath=$this->getProfileAvatar()) {
+    	if ($sPath=$this->getProfileAvatar()) { 	
         	return str_replace('_100x100',(($iSize==0)?"":"_{$iSize}x{$iSize}"),$sPath);
     	} else {
     		return Config::Get('path.static.skin').'/images/avatar_'.$iSize.'x'.$iSize.'.jpg';
@@ -140,7 +140,7 @@ class ModuleUser_EntityUser extends Entity {
     public function isAdministrator() {
         return $this->_aData['user_is_administrator'];
     }
-    public function getUserWebPath() {
+    public function getUserWebPath() {   
     	return Router::GetPath('profile').$this->getLogin().'/';
     }
     /**
@@ -229,7 +229,7 @@ class ModuleUser_EntityUser extends Entity {
     }
     public function setProfileFoto($data) {
     	$this->_aData['user_profile_foto']=$data;
-    }
+    }  
     public function setSettingsNoticeNewTopic($data) {
     	$this->_aData['user_settings_notice_new_topic']=$data;
     }

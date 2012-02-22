@@ -344,7 +344,9 @@ class PluginAceadminpanel_ModuleViewer extends PluginAceadminpanel_Inherit_Modul
         $sSmartyVersion = null;
         if (property_exists($this->oSmarty, '_version')) {
             $sSmartyVersion = $this->oSmarty->_version;
-        }
+        } else {
+					$sSmartyVersion = Smarty::SMARTY_VERSION;
+				}
         return $sSmartyVersion;
     }
 

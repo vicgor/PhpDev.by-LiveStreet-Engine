@@ -22,17 +22,17 @@ require_once(Config::Get('path.root.engine').'/lib/external/phpMailer/class.phpm
  *
  */
 class ModuleMail extends Module {
-	protected $oMailer;
+	protected $oMailer;		
 	/**
-	 * Настройки SMTP сервера для отправки писем
-	 *
+	 * Настройки SMTP сервера для отправки писем	
+	 * 
 	 */
 	protected $sHost;
 	protected $iPort;
 	protected $sUsername;
 	protected $sPassword;
 	protected $bSmtpAuth;
-  protected $sSmtpSecure;
+	protected $sSmtpSecure;
 	/**
 	 * Метод отправки почты
 	 *
@@ -71,16 +71,16 @@ class ModuleMail extends Module {
 	 * Инициализация модуля
 	 *
 	 */
-	public function Init() {
+	public function Init() {	
 		/**
-	 	 * Настройки SMTP сервера для отправки писем
-	 	 */
+	 	 * Настройки SMTP сервера для отправки писем	
+	 	 */	
 		$this->sHost     = Config::Get('sys.mail.smtp.host');
 		$this->iPort     = Config::Get('sys.mail.smtp.port');
 		$this->sUsername = Config::Get('sys.mail.smtp.user');
 		$this->sPassword = Config::Get('sys.mail.smtp.password');
-		$this->bSmtpAuth = Config::Get('sys.mail.smtp.auth');
-    $this->sSmtpSecure = Config::Get('sys.mail.smtp.secure');
+		$this->bSmtpAuth = Config::Get('sys.mail.smtp.auth');	
+		$this->sSmtpSecure = Config::Get('sys.mail.smtp.secure');
 		/**
 		 * Метод отправки почты
 		 */
@@ -88,7 +88,7 @@ class ModuleMail extends Module {
 		/**
 		 * Кодировка писем
 		 */
-		$this->sCharSet=Config::Get('sys.mail.charset');
+		$this->sCharSet=Config::Get('sys.mail.charset');		
 		/**
 		 * Мыло от кого отправляется вся почта
 		 */
@@ -101,19 +101,19 @@ class ModuleMail extends Module {
 		/**
 		 * Создаём объект phpMailer и устанвливаем ему необходимые настройки
 		 */
-		$this->oMailer = new phpmailer();
-		$this->oMailer->Host=$this->sHost;
+		$this->oMailer = new phpmailer();		
+		$this->oMailer->Host=$this->sHost;	
 		$this->oMailer->Port=$this->iPort;
 		$this->oMailer->Username=$this->sUsername;
 		$this->oMailer->Password=$this->sPassword;
 		$this->oMailer->SMTPAuth=$this->bSmtpAuth;
-    $this->oMailer->SMTPSecure=$this->sSmtpSecure;
+		$this->oMailer->SMTPSecure=$this->sSmtpSecure;
 		$this->oMailer->Mailer=$this->sMailerType;
 		$this->oMailer->WordWrap=$this->iWordWrap;
 		$this->oMailer->CharSet=$this->sCharSet;
 
 		$this->oMailer->From=$this->sFrom;
-		$this->oMailer->FromName=$this->sFromName;
+		$this->oMailer->FromName=$this->sFromName;			
 	}
 
 	/**
